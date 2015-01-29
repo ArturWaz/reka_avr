@@ -31,6 +31,7 @@ void palm_thumbClose();
 void palm_thumbAngle(uint16_t duty);
 void palm_thumbLeft();
 void palm_thumbRight();
+void palm_thumbMid();
 
 
 #endif /* CONFIG_H_ */
