@@ -13,7 +13,7 @@
 void readAndSetFingers();
 
 
-							// todo interrupt uart and test
+							// todo interrupt uart, check the equation of baudrate and test
 
 
 int main(){
