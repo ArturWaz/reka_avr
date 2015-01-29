@@ -28,7 +28,7 @@ void palm_middleClose();
 
 void palm_thumbOpen();
 void palm_thumbClose();
-void palm_thumbAngle(uint8_t PWM);
+void palm_thumbAngle(uint16_t duty);
 void palm_thumbLeft();
 void palm_thumbRight();
 

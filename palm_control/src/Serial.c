@@ -11,11 +11,11 @@
 
 void serial_init(uint16_t ubrr_value){ //todo baudrate conversion
 
-   //Set Baud rate
+   // Set Baud rate
    UBRRL = ubrr_value;
    UBRRH = (ubrr_value>>8);
 
-   /*Set Frame Format
+   /* Set Frame Format
    >> Asynchronous mode
    >> No Parity
    >> 1 StopBit
@@ -23,7 +23,7 @@ void serial_init(uint16_t ubrr_value){ //todo baudrate conversion
    */
    UCSRC=(1<<URSEL) | (3<<UCSZ0);
 
-   //Enable The receiver and transmitter
+   // Enable The receiver and transmitter
    UCSRB=(1<<RXEN) | (1<<TXEN);
 }
 

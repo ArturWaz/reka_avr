@@ -6,6 +6,7 @@
  */
 
 #include "Palm.h"
+#include "Servo.h"
 #include <avr/io.h>
 
 
@@ -29,14 +30,17 @@
 #define THUMB_I2 PIN7 // port D
 #define THUMB_PWM PIN0 // port B
 
+#define THUMB_MID 1500
+#define THUMB_LEFT 1000
+#define THUMB_RIGHT 1000
+
 
 
 void palm_init(){
 	DDRB |= (1<<INDEX_I1) |  (1<<MIDDLE_I1) | (1<<MIDDLE_I2) | (1<<MIDDLE_PWM) |  (1<<THUMB_PWM);
 	DDRC |= (1<<PINKY_I1) | (1<<PINKY_I2) | (1<<PINKY_PWM) | (1<<RING_I1) | (1<<RING_I2) | (1<<RING_PWM) | (1<<INDEX_I2) | (1<<INDEX_PWM);
 	DDRD |= (1<<THUMB_I1) | (1<<THUMB_I2);
-
-
+	servo_init();
 }
 
 
@@ -93,9 +97,11 @@ void palm_thumbClose(){
 }
 
 
-void palm_thumbAngle(uint8_t PWM){
+void palm_thumbAngle(uint16_t duty){
+	if (duty < THUMB_LEFT) duty = THUMB_LEFT;
+	if (duty > THUMB_RIGHT) duty = THUMB_RIGHT;
+	servo_set(duty);
 }
-void palm_thumbLeft(){
-}
-void palm_thumbRight(){
-}
+void palm_thumbLeft(){ servo_set(THUMB_LEFT); }
+void palm_thumbRight(){ servo_set(THUMB_RIGHT); }
+void palm_thumbMid(){ servo_set(THUMB_MID); }
