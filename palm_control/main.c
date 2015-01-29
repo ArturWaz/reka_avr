@@ -12,10 +12,14 @@
 
 void readAndSetFingers();
 
+
+							// todo interrupt uart and test
+
+
 int main(){
 
 	palm_init();
-	//serial_init(); // todo baudrate
+	serial_init();
 
 	while(1){
 
@@ -41,6 +45,7 @@ void readAndSetFingers(){
 		if (finger & (1<<PINKY_OC)) palm_pinkyOpen();
 
 		if (finger & (1<<THUMB_LRM)) palm_thumbRight();
+		return;
 	}
 	else if (state == CLOSE){
 		if (finger & (1<<THUMB_OC)) palm_thumbClose();
@@ -50,6 +55,7 @@ void readAndSetFingers(){
 		if (finger & (1<<PINKY_OC)) palm_pinkyClose();
 
 		if (finger & (1<<THUMB_LRM)) palm_thumbLeft();
+		return;
 	}
 	else if (state == MIDDLE){
 		if (finger & (1<<THUMB_LRM)) palm_thumbMid();
