@@ -15,7 +15,7 @@ void readAndSetFingers();
 int main(){
 
 	palm_init();
-	serial_init(); // todo baudrate
+	//serial_init(); // todo baudrate
 
 	while(1){
 
@@ -37,7 +37,7 @@ void readAndSetFingers(){
 		if (finger & (1<<THUMB_OC)) palm_thumbOpen();
 		if (finger & (1<<INDEX_OC)) palm_indexOpen();
 		if (finger & (1<<MIDDLE_OC)) palm_middleOpen();
-		if (finger & (1<<RING_OC)) palm_RingOpen();
+		if (finger & (1<<RING_OC)) palm_ringOpen();
 		if (finger & (1<<PINKY_OC)) palm_pinkyOpen();
 
 		if (finger & (1<<THUMB_LRM)) palm_thumbRight();

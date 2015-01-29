@@ -26,7 +26,7 @@
 void servo_init(){
 	DDRB |= (1<<PIN1); // set OC1A as a output
 	ICR1 = 20001; // set cycle equal 20ms
-	servo_setMiddle(); // set servo in the middle
+	OCR1A = 1500; // 1.5ms
 
 	// set FAST PWM, with prescaler eaqual to 8
 	TCCR1A = (1<<WGM11) | (1<<COM1A0);

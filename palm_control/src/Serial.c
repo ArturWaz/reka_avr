@@ -7,13 +7,18 @@
 
 
 #include <avr/io.h>
+//#include <avr/iomx8.h>
 
+#define BAUDRATE 9600
 
 void serial_init(uint16_t ubrr_value){ //todo baudrate conversion
 
+	DDRD |= (1<<PIN1);
+	ubrr_value = (((F_CPU / (BAUDRATE * 16UL))) - 1);
+
    // Set Baud rate
-   UBRRL = ubrr_value;
-   UBRRH = (ubrr_value>>8);
+   UBRR0L = ubrr_value;
+   UBRR0H = (ubrr_value>>8);
 
    /* Set Frame Format
    >> Asynchronous mode
@@ -21,21 +26,21 @@ void serial_init(uint16_t ubrr_value){ //todo baudrate conversion
    >> 1 StopBit
    >> char size 8
    */
-   UCSRC=(1<<URSEL) | (3<<UCSZ0);
+   UCSR0C=(1<<USBS0) | (3<<UCSZ00);
 
    // Enable The receiver and transmitter
-   UCSRB=(1<<RXEN) | (1<<TXEN);
+   UCSR0B=(1<<RXEN0) | (1<<TXEN0);
 }
 
 
 void serial_sendByte(uint8_t byte){
-	while(!(UCSRA & (1<<UDRE)));
-	UDR = byte;
+	while(!(UCSR0A & (1<<UDRE0)));
+	UDR0 = byte;
 }
 
 
 uint32_t serial_readByte(){
-	while(!(UCSRA & (1<<RXC)));
-	return UDR;
+	while(!(UCSR0A & (1<<RXC0)));
+	return UDR0;
 }
 
