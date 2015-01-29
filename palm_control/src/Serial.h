@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 
-void serial_init(uint16_t ubrr_value);
+void serial_init();
 
 void serial_sendByte(uint8_t byte);
 
