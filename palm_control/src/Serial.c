@@ -14,7 +14,7 @@
 void serial_init(){
 
 	DDRD |= (1<<PIN1);
-	uint16_t ubrr_value = (((F_CPU / (BAUDRATE * 16UL))) - 1); // todo check equation
+	uint16_t ubrr_value = (((F_CPU / (BAUDRATE * 16UL))) - 1);
 
     // Set Baud rate
 	UBRR0L = ubrr_value;

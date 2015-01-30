@@ -9,17 +9,38 @@
 #include "Palm.h"
 #include "Serial.h"
 #include <stdint.h>
+#include <avr/io.h>
+#include <avr/iomx8.h>
 
 void readAndSetFingers();
+void serial_interruptInit();
+
+uint8_t GLOBAL_finger;
+uint8_t GLOBAL_state;
 
 
-							// todo interrupt uart, check the equation of baudrate and test
+// interrupt
+ISR(USART_RX_vect){
+	uint8_t temp;
+	temp = serial_readByte();
+	if ((temp & 0x81) == 0x81){
+		GLOBAL_finger = temp;
+		serial_sendByte(temp);
+	}
+	else if ((temp & 0x81) == 0x00){
+		GLOBAL_state = temp;
+		serial_sendByte(temp);
+	}
+	else
+		serial_sendByte(0x0F);
+}
 
 
 int main(){
 
 	palm_init();
 	serial_init();
+	serial_interruptInit();
 
 	while(1){
 
@@ -31,12 +52,17 @@ int main(){
 }
 
 
+
+void serial_interruptInit(){
+	UCSR0B |= (1<<RXCIE0);
+}
+
 void readAndSetFingers(){
-	uint8_t finger = 0, state = 0;
+	uint8_t finger = GLOBAL_finger;
+	uint8_t state = GLOBAL_state;
 
-	if (((finger = serial_readByte()) & 0x81) != 0x81) return;
+	if ((finger & 0x81) != 0x81) return;
 
-	state = serial_readByte();
 	if (state == OPEN){
 		if (finger & (1<<THUMB_OC)) palm_thumbOpen();
 		if (finger & (1<<INDEX_OC)) palm_indexOpen();
