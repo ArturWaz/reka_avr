@@ -10,17 +10,54 @@
 #include "Serial.h"
 #include <stdint.h>
 #include <avr/io.h>
+#include <util/delay.h>
 #include <avr/iomx8.h>
 
 void readAndSetFingers();
-void serial_interruptInit();
+void readFromPort();
 
 uint8_t GLOBAL_finger;
 uint8_t GLOBAL_state;
 
 
 // interrupt
-ISR(USART_RX_vect){
+//void serial_interruptInit(){ UCSR0B |= (1<<RXCIE0); }
+//ISR(USART_RX_vect){
+//	uint8_t temp;
+//	temp = serial_readByte();
+//	if ((temp & 0x81) == 0x81){
+//		GLOBAL_finger = temp;
+//		serial_sendByte(temp);
+//	}
+//	else if ((temp & 0x81) == 0x00){
+//		GLOBAL_state = temp;
+//		serial_sendByte(temp);
+//	}
+//	else
+//		serial_sendByte(0x0F);
+//}
+
+
+
+
+int main(){
+
+	palm_init();
+	serial_init();
+	//serial_interruptInit();
+
+	while(1){
+
+		readFromPort();
+		//readAndSetFingers();
+
+	}
+
+	return 0;
+}
+
+
+void readFromPort(){
 	uint8_t temp;
 	temp = serial_readByte();
 	if ((temp & 0x81) == 0x81){
@@ -35,27 +72,6 @@ ISR(USART_RX_vect){
 		serial_sendByte(0x0F);
 }
 
-
-int main(){
-
-	palm_init();
-	serial_init();
-	serial_interruptInit();
-
-	while(1){
-
-		readAndSetFingers();
-
-	}
-
-	return 0;
-}
-
-
-
-void serial_interruptInit(){
-	UCSR0B |= (1<<RXCIE0);
-}
 
 void readAndSetFingers(){
 	uint8_t finger = GLOBAL_finger;
