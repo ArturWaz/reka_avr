@@ -19,8 +19,8 @@
 #define RING_PWM PIN4 // port C
 
 #define INDEX_I1 PIN5 // port B
-#define INDEX_I2 PIN7 // port C
-#define INDEX_PWM PIN6 // port C
+#define INDEX_I2 PIN7 // port C    // todo correct the pins to 8 and 9
+#define INDEX_PWM PIN6 // port C   // todo correct the pins to 8 and 9
 
 #define MIDDLE_I1 PIN2 // port B
 #define MIDDLE_I2 PIN3 // port B
@@ -37,7 +37,7 @@
 
 
 void palm_init(){
-	DDRB |= (1<<INDEX_I1) |  (1<<MIDDLE_I1) | (1<<MIDDLE_I2) | (1<<MIDDLE_PWM) |  (1<<THUMB_PWM);
+	DDRB |= (1<<INDEX_I1) |  (1<<MIDDLE_I1) | (1<<MIDDLE_I2) | (1<<MIDDLE_PWM) |  (1<<THUMB_PWM);  // todo correct the pins to 8 and 9
 	DDRC |= (1<<PINKY_I1) | (1<<PINKY_I2) | (1<<PINKY_PWM) | (1<<RING_I1) | (1<<RING_I2) | (1<<RING_PWM) | (1<<INDEX_I2) | (1<<INDEX_PWM);
 	DDRD |= (1<<THUMB_I1) | (1<<THUMB_I2);
 	servo_init();
@@ -64,14 +64,14 @@ void palm_ringClose(){
 }
 
 
-void palm_indexOpen(){
-	PORTC &= ~(1<<INDEX_I2);
+void palm_indexOpen(){        // todo correct the pins to 8 and 9
+	//PORTC &= ~(1<<INDEX_I2);
 	PORTB |= (1<<INDEX_I1);
-	PORTC |= (1<<INDEX_PWM);
+	//PORTC |= (1<<INDEX_PWM);
 }
 void palm_indexClose(){
 	PORTB &= ~(1<<INDEX_I1);
-	PORTC |= (1<<INDEX_I2) | (1<<INDEX_PWM);
+	//PORTC |= (1<<INDEX_I2) | (1<<INDEX_PWM);
 }
 
 

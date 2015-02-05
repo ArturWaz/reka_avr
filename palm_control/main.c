@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <avr/io.h>
 #include <util/delay.h>
-#include <avr/iomx8.h>
+//#include <avr/iomx8.h>
 
 void readAndSetFingers();
 void readFromPort();
@@ -42,6 +42,7 @@ uint8_t GLOBAL_state;
 
 int main(){
 
+	OSCCAL = 0xC2; // calibration for 8MHz
 	palm_init();
 	serial_init();
 	//serial_interruptInit();
@@ -49,7 +50,7 @@ int main(){
 	while(1){
 
 		readFromPort();
-		//readAndSetFingers();
+		readAndSetFingers();
 
 	}
 
@@ -60,6 +61,7 @@ int main(){
 void readFromPort(){
 	uint8_t temp;
 	temp = serial_readByte();
+//	serial_sendByte(temp);
 	if ((temp & 0x81) == 0x81){
 		GLOBAL_finger = temp;
 		serial_sendByte(temp);
@@ -103,5 +105,4 @@ void readAndSetFingers(){
 		if (finger & (1<<THUMB_LRM)) palm_thumbMid();
 		return;
 	}
-
 }
