@@ -13,6 +13,7 @@
 
 
 void palm_init();
+void palm_turnOffMotors();
 
 void palm_pinkyOpen();
 void palm_pinkyClose();

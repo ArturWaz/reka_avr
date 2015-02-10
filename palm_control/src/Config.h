@@ -24,4 +24,5 @@
 #define MIDDLE 0B01100110
 
 
+
 #endif /* CONFIG_H_ */

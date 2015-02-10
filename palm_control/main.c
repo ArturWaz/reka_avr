@@ -46,6 +46,7 @@ int main(){
 	palm_init();
 	serial_init();
 	//serial_interruptInit();
+	GLOBAL_finger = 0x0F;
 
 	while(1){
 
@@ -62,7 +63,11 @@ void readFromPort(){
 	uint8_t temp;
 	temp = serial_readByte();
 //	serial_sendByte(temp);
-	if ((temp & 0x81) == 0x81){
+	if (temp == 0x81){
+		GLOBAL_finger = temp;
+		serial_sendByte(temp);
+	}
+	else if ((temp & 0x81) == 0x81){
 		GLOBAL_finger = temp;
 		serial_sendByte(temp);
 	}
@@ -81,7 +86,11 @@ void readAndSetFingers(){
 
 	if ((finger & 0x81) != 0x81) return;
 
-	if (state == OPEN){
+	if (finger == 0x81){
+		palm_turnOffMotors();
+		return;
+	}
+	else if (state == OPEN){
 		if (finger & (1<<THUMB_OC)) palm_thumbOpen();
 		if (finger & (1<<INDEX_OC)) palm_indexOpen();
 		if (finger & (1<<MIDDLE_OC)) palm_middleOpen();
