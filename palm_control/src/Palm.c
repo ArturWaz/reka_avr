@@ -31,15 +31,15 @@
 #define THUMB_PWM PIN0 // port B
 
 #define THUMB_MID 1500
-#define THUMB_LEFT 1000
-#define THUMB_RIGHT 1000
+#define THUMB_LEFT 750
+#define THUMB_RIGHT 2250
 
 
 
 void palm_init(){
-	DDRB |= (1<<INDEX_I1) |  (1<<MIDDLE_I1) | (1<<MIDDLE_I2) | (1<<MIDDLE_PWM) |  (1<<THUMB_PWM);  // todo correct the pins to 8 and 9
-	DDRC |= (1<<PINKY_I1) | (1<<PINKY_I2) | (1<<PINKY_PWM) | (1<<RING_I1) | (1<<RING_I2) | (1<<RING_PWM) | (1<<INDEX_I2) | (1<<INDEX_PWM);
-	DDRD |= (1<<THUMB_I1) | (1<<THUMB_I2);
+	DDRB |= (1<<INDEX_I1) |  (1<<MIDDLE_I1) | (1<<MIDDLE_I2) | (1<<MIDDLE_PWM) |  (1<<THUMB_PWM);
+	DDRC |= (1<<PINKY_I1) | (1<<PINKY_I2) | (1<<PINKY_PWM) | (1<<RING_I1) | (1<<RING_I2) | (1<<RING_PWM);
+	DDRD |= (1<<THUMB_I1) | (1<<THUMB_I2) | (1<<INDEX_I2) | (1<<INDEX_PWM);
 	servo_init();
 }
 
