@@ -83,11 +83,17 @@ void readFromPort(){
 void readAndSetFingers(){
 	uint8_t finger = GLOBAL_finger;
 	uint8_t state = GLOBAL_state;
+//	uint16_t thumb_pwm;
 
 	if ((finger & 0x81) != 0x81) return;
 
 	if (finger == 0x81){
 		palm_turnOffMotors();
+		return;
+	}
+	if (finger & (0x81|(THUMB_LRM<<1))) {
+//		thumb_pwm = 23*(state>>1)+750;
+		palm_thumbAngle(23*(state>>1)+750);
 		return;
 	}
 	else if (state == OPEN){
@@ -97,7 +103,7 @@ void readAndSetFingers(){
 		if (finger & (1<<RING_OC)) palm_ringOpen();
 		if (finger & (1<<PINKY_OC)) palm_pinkyOpen();
 
-		if (finger & (1<<THUMB_LRM)) palm_thumbRight();
+//		if (finger & (1<<THUMB_LRM)) palm_thumbRight();
 		return;
 	}
 	else if (state == CLOSE){
@@ -107,11 +113,11 @@ void readAndSetFingers(){
 		if (finger & (1<<RING_OC)) palm_ringClose();
 		if (finger & (1<<PINKY_OC)) palm_pinkyClose();
 
-		if (finger & (1<<THUMB_LRM)) palm_thumbLeft();
+//		if (finger & (1<<THUMB_LRM)) palm_thumbLeft();
 		return;
 	}
-	else if (state == MIDDLE){
-		if (finger & (1<<THUMB_LRM)) palm_thumbMid();
-		return;
-	}
+//	else if (state == MIDDLE){
+//		if (finger & (1<<THUMB_LRM)) palm_thumbMid();
+//		return;
+//	}
 }
